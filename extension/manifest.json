@@ -1,0 +1,17 @@
+{
+  "name": "Passive voice grammar checker",
+  "version": "1.0",
+  "description": "A tool to help writers use active voice init",
+  "manifest_version": 2,
+  "background": {
+    "scripts": ["background.js", "jquery-3.4.1.js"],
+    "persistent": false
+  },
+  "permissions": [
+    "https://docs.google.com/document/*"
+  ],
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "run_at": "document_idle",
+    "js": ["jquery-3.4.1.js", "main.js", "mark.min.js"]
+   }]}
