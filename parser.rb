@@ -6,7 +6,7 @@ require 'sinatra'
 require 'sinatra/cors'
 require 'pry'
 
-set :allow_origin, 'chrome-extension://ghalmaphhlhkpeieccnagnoceijenldl'
+set :allow_origin, '*'
 set :allow_methods, "POST"
 set :allow_headers, "Content-Length, Content-Type, X-Content-Type-Options"
 set :expose_headers, "Content-Length, Content-Type, X-Content-Type-Options"

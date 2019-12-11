@@ -22,10 +22,10 @@ function observe_google_doc() {
 };
 
 function doneTyping() {
-  collectText(window.last_event)
+  check_grammar(window.last_event)
 }
 
-function collectText(typing_event) {
+function check_grammar(typing_event) {
   var paragraph = jQuery(typing_event.target).parents('.kix-paragraphrenderer').first()
   var text = ""
 
@@ -35,7 +35,7 @@ function collectText(typing_event) {
   })
 
   chrome.runtime.sendMessage({purpose: "check grammar", data: text}, function(response) {
-    var sentences =  Object.keys(response)
-    highlight_text(paragraph[0], sentences)
+    // var sentences =  Object.keys(response)
+    highlight_text(paragraph[0], response)
   });
 }

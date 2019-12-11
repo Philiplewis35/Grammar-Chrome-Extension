@@ -1,7 +1,7 @@
 {
   "name": "Passive voice grammar checker",
   "version": "1.0",
-  "description": "A tool to help writers use active voice init",
+  "description": "A tool to help writers use active voice",
   "manifest_version": 2,
   "background": {
     "scripts": ["background.js", "jquery-3.4.1.js"],
