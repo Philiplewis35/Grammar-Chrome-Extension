@@ -35,7 +35,6 @@ function check_grammar(typing_event) {
   })
 
   chrome.runtime.sendMessage({purpose: "check grammar", data: text}, function(response) {
-    // var sentences =  Object.keys(response)
     highlight_text(paragraph[0], response)
   });
 }

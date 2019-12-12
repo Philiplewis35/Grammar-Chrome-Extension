@@ -41,8 +41,8 @@ end
 
 def active_suggestions(passive_sentences)
   results = {}
-  passive_sentences.map do |passive_sentence|
-    results[passive_sentence] = convert_to_active_voice(passive_sentence)
+  passive_sentences.map.with_index(1) do |passive_sentence, index|
+    results[passive_sentence] = [index, convert_to_active_voice(passive_sentence)]
   end
   results
 end
