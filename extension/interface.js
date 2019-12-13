@@ -10,7 +10,6 @@ function addStyleString(str) {
   document.body.appendChild(node);
 }
 
-//
 function highlight_text(context, sentences) {
   var instance = new Mark(context);
   $.each(sentences, function(sentence, response) {
@@ -22,16 +21,10 @@ function highlight_text(context, sentences) {
       suggestion_box = $("#" + suggestion_id + ".box")[0]
       suggestion_box.style.marginLeft = $(node).position().left + 'px';
       $(node).hover(function() {
-        $(suggestion_box).css('display', 'block')
+        $(this).find('.box').css('display', 'block')
       }, function() {
-        $(suggestion_box).css('display', 'none')
+        $(this).find('.box').css('display', 'none')
       });
     }})
-
-    $('.grammar').hover(function() {
-      $('.box').css('display', 'block')
-    }, function() {
-      $('.box').css('display', 'none')
-    })
   })
 }
