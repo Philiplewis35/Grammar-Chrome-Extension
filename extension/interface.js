@@ -16,7 +16,8 @@ function highlight_text(context, sentences) {
     suggestion_id = response[0]
     suggestion = response[1]
     phrase = sentence.split(' ').join('.*'); // double spaced?
-    instance.markRegExp(new RegExp(phrase), {"className": 'grammar', "each": function(node) {
+    instance.markRegExp(new RegExp(phrase), {"className": 'grammar', "exclude": ['.box'], "acrossElements": true, "each": function(node) {
+      $(node).removeClass('box')
       $(node).append("<div class='box' id=" + suggestion_id + ">" + suggestion + "</div>");
       suggestion_box = $("#" + suggestion_id + ".box")[0]
       suggestion_box.style.marginLeft = $(node).position().left + 'px';
