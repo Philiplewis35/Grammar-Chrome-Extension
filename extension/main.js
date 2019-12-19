@@ -18,7 +18,9 @@ function observe_google_doc() {
     window.last_event = events[0]
   };
   const observer = new MutationObserver(set_event);
-  observer.observe($('.kix-paragraphrenderer')[0], { attributes: true, subtree: true }); // TODO: All paragraphs
+  $('.kix-paragraphrenderer').each(function(index, paragraph) {
+    observer.observe(paragraph, { attributes: true, subtree: true });
+  })
 };
 
 function doneTyping() {
@@ -30,7 +32,7 @@ function check_grammar(typing_event) {
   var text = ""
 
   $.each(paragraph.children(), function(index, line) {
-    line = jQuery(line).find('.kix-wordhtmlgenerator-word-node')
+    line = $(line).find('.kix-wordhtmlgenerator-word-node')
     text += line.text()
   })
 
