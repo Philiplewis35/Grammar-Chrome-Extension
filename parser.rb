@@ -58,3 +58,7 @@ post '/' do
   response.header.update({"Content-Type" => 'text/json', "X-Content-Type-Options" => 'nosniff'})
   passive_voice(text).to_json
 end
+
+get '/' do
+  "Hello World"
+end
