@@ -13,5 +13,6 @@
   "content_scripts": [{
     "matches": ["<all_urls>"],
     "run_at": "document_start",
-    "js": ["jquery-3.4.1.js", "arrive.min.js", "main.js", "interface.js", "mark.min.js"]
+    "js": ["jquery-3.4.1.js", "arrive.min.js", "main.js", "interface.js", "mark.min.js"],
+    "css": ["style.css"]
    }]}

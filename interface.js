@@ -1,10 +1,3 @@
-$( document ).ready(function() {
-  if($(".kix-lineview-content")[0]) {
-    addStyleString('.kix-lineview-content {position: static !important; }')
-    addStyleString('.box { visibility: hidden; background-color: white; color: dark-grey; height: 75px; position: absolute; margin-top: 0.75em; padding: 1em 1em 1em 1em; z-index: 20; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);}')
-  }
-});
-
 function addStyleString(str) {
   var node = document.createElement('style');
   node.innerHTML = str;

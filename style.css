@@ -1,0 +1,32 @@
+.kix-lineview-content {
+  position: static !important;
+}
+
+.box {
+  position: absolute;
+  visibility: hidden;
+  background-color: white;
+  color: dark-grey;
+  height: 75px;
+  margin-top: 0.75em;
+  padding: 1em 1em 1em 1em;
+  z-index: 20;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.options_border {
+  border-top: solid grey 1px;
+}
+
+.box_options {
+  padding-top: 0.3em;
+  width: 90%;
+  bottom: 0;
+  position: absolute;
+  padding-bottom: 1em;
+
+  &:hover {
+    background-color: gainsboro;
+    cursor: pointer;
+  }
+}
