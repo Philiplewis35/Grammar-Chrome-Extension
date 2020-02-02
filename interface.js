@@ -17,13 +17,11 @@ function highlight_text(context, sentences) {
       page = $('.kix-page-column')[0]
 
 
-      mark_left = node.getBoundingClientRect().x
       mark_width = node.getBoundingClientRect().width
       mark_center = node.getBoundingClientRect().x + (mark_width / 2)
       mark_right = node.getBoundingClientRect().x + mark_width
 
 
-      box_left = suggestion_box.getBoundingClientRect().x
       box_width = suggestion_box.getBoundingClientRect().width
       box_center = suggestion_box.getBoundingClientRect().x + (box_width / 2)
       box_right = suggestion_box.getBoundingClientRect().x + box_width
