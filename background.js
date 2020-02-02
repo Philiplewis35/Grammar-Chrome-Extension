@@ -5,3 +5,5 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
    return true;
  };
 });
+
+// $.post('https://parser3.herokuapp.com', message.data, function(r){sendResponse(r)})

@@ -14,11 +14,8 @@ function highlight_text(context, sentences) {
     exclude: ['.box'], acrossElements: true, each: function(node) {
       $(node).append("<div class='box' id=box_" + suggestion_id + ">" + suggestion + "</div>");
       suggestion_box = $(node).find('.box')[0]
-      // suggestion_box = $("#" + suggestion_id + ".box")[0]
       page = $('.kix-page-column')[0]
 
-      // node = $('.grammar')
-      // suggestion_box = $('.box')
 
       mark_left = node.getBoundingClientRect().x
       mark_width = node.getBoundingClientRect().width
@@ -33,29 +30,24 @@ function highlight_text(context, sentences) {
 
       page_right = page.getBoundingClientRect().x + page.getBoundingClientRect().width
 
-      if(mark_right < box_right) {
-        // shift arrow
-        arrow_padding = ((mark_center - box_left) / box_width) * 100
-        // $(suggestion_box).append("<style>#box_" + suggestion_id + ".box:after { content: ''; position: absolute; top: 0; left: " + arrow_padding + "%; width: 0; height: 0; border: 0.625em solid transparent; border-bottom-color: white; border-top: 0; margin-left: -0.625em; margin-top: -0.625em;}</style>")
-      } else {
-        // pad box to align arrow
+      if(mark_right > box_right) {
+        // align box center with center of phrase
         box_padding = (mark_center - box_center)
         suggestion_box.style.marginLeft = box_padding + 'px';
         box_right = suggestion_box.getBoundingClientRect().x + box_width
-        if(box_right > (page_right - 20)) {
-          box_padding = ((page_right - box_left) - (box_width + 20))
-          suggestion_box.style.marginLeft = box_padding + 'px';
-          // $(suggestion_box).append("<style>#box_" + suggestion_id + ".box:after { content: ''; position: absolute; top: 0; left: 50%; width: 0; height: 0; border: 0.625em solid transparent; border-bottom-color: white; border-top: 0; margin-left: -0.625em; margin-top: -0.625em;}</style>")
-      } else {
-        // $(suggestion_box).append("<style>#box_" + suggestion_id + ".box:after { content: ''; position: absolute; top: 0; left: 50%; width: 0; height: 0; border: 0.625em solid transparent; border-bottom-color: white; border-top: 0; margin-left: -0.625em; margin-top: -0.625em;}</style>")
       }
-    }
+
+      if(box_right > (page_right - 20)) { // if box has gone off right edge
+        box_padding = ((page_right - box_left) - (box_width + 20))
+        suggestion_box.style.marginLeft = box_padding + 'px';
+      }
 
       $(node).hover(function() {
         $(this).find('.box').css('visibility', 'visible')
       }, function() {
         $(this).find('.box').css('visibility', 'hidden')
       });
+
     }})
   })
 }
