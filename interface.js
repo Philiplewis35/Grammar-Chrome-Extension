@@ -2,6 +2,14 @@ function addStyleString(str) {
   var node = document.createElement('style');
   node.innerHTML = str;
   document.body.appendChild(node);
+  ignore()
+}
+
+
+function ignore() {
+  $('.ignore_text').on('click', function() {
+    console.log('hello')
+  })
 }
 
 function highlight_text(context, sentences) {
@@ -12,7 +20,7 @@ function highlight_text(context, sentences) {
     console.log(sentence)
     instance.mark(sentence, {className: 'grammar', separateWordSearch: false, ignoreJoiners: true,
     exclude: ['.box'], acrossElements: true, each: function(node) {
-      $(node).append("<div class='box' id=box_" + suggestion_id + ">" + suggestion + "</div>");
+      $(node).append("<div class='box' id=box_" + suggestion_id + ">" + suggestion + "<div class='options_border'></div><button type='button' class='btn btn-primary btn-sm ignore_text'>Ignore</button></div>");
       suggestion_box = $(node).find('.box')[0]
       page = $('.kix-page-column')[0]
 
@@ -21,7 +29,7 @@ function highlight_text(context, sentences) {
       mark_center = node.getBoundingClientRect().x + (mark_width / 2)
       mark_right = node.getBoundingClientRect().x + mark_width
 
-
+      box_left = suggestion_box.getBoundingClientRect().x
       box_width = suggestion_box.getBoundingClientRect().width
       box_center = suggestion_box.getBoundingClientRect().x + (box_width / 2)
       box_right = suggestion_box.getBoundingClientRect().x + box_width
@@ -41,9 +49,23 @@ function highlight_text(context, sentences) {
       }
 
       $(node).hover(function() {
-        $(this).find('.box').css('visibility', 'visible')
+        box = $(this).find('.box')
+
+        box.css('visibility', 'visible')
       }, function() {
-        $(this).find('.box').css('visibility', 'hidden')
+        setTimeout(function(){
+
+          box.hover(function() {
+            box.addClass('hovering');
+          }, function() {
+            box.removeClass('hovering');
+            box.find('.box').css('visibility', 'hidden')
+          });
+
+          if (! (box.hasClass('hovering'))) {
+            box.css('visibility', 'hidden')
+          }
+        }, 1000);
       });
 
     }})

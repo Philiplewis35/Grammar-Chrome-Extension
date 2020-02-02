@@ -7,7 +7,6 @@
   visibility: hidden;
   background-color: white;
   color: dark-grey;
-  height: 75px;
   margin-top: 0.75em;
   padding: 1em 1em 1em 1em;
   z-index: 20;
@@ -15,18 +14,11 @@
 }
 
 .options_border {
-  border-top: solid grey 1px;
+  border-top: 1px solid grey;
+  margin-top: 3em;
+  margin-bottom: 0.5em;
 }
 
-.box_options {
-  padding-top: 0.3em;
-  width: 90%;
-  bottom: 0;
-  position: absolute;
-  padding-bottom: 1em;
-
-  &:hover {
-    background-color: gainsboro;
-    cursor: pointer;
-  }
+mark {
+  background-color: yellow!important;
 }
