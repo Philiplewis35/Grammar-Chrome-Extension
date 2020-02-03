@@ -4,9 +4,8 @@
 
 .box {
   position: absolute;
-  visibility: hidden;
+  opacity: 0;
   background-color: white;
-  color: dark-grey;
   margin-top: 0.75em;
   padding: 1em 1em 1em 1em;
   z-index: 20;

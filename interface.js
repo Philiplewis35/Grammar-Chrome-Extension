@@ -1,14 +1,27 @@
-function addStyleString(str) {
-  var node = document.createElement('style');
-  node.innerHTML = str;
-  document.body.appendChild(node);
-  ignore()
+$(document).ready(function() {
+  box_hover()
+  mark_hover()
+})
+
+function box_hover() {
+  $('.box').hover(function() {
+    console.log('box hover')
+  })
 }
 
+function mark_hover() { // opacity 0 = hidden
+  $(document).on('mouseover', '.grammar', function(e) {
+    var mark = $(this)[0]
+    if(e.target == mark) { // if hovering over marked text
+      $(mark).find('.box').css('opacity', 1)
+    }
+  })
 
-function ignore() {
-  $('.ignore_text').on('click', function() {
-    console.log('hello')
+  $(document).on('mouseout', '.grammar', function(e) {
+    var mark = $(this)[0]
+    if(e.target == mark) { // if hovering over marked text
+      $(mark).find('.box').css('opacity', 0)
+    }
   })
 }
 
@@ -47,27 +60,6 @@ function highlight_text(context, sentences) {
         box_padding = ((page_right - box_left) - (box_width + 20))
         suggestion_box.style.marginLeft = box_padding + 'px';
       }
-
-      $(node).hover(function() {
-        box = $(this).find('.box')
-
-        box.css('visibility', 'visible')
-      }, function() {
-        setTimeout(function(){
-
-          box.hover(function() {
-            box.addClass('hovering');
-          }, function() {
-            box.removeClass('hovering');
-            box.find('.box').css('visibility', 'hidden')
-          });
-
-          if (! (box.hasClass('hovering'))) {
-            box.css('visibility', 'hidden')
-          }
-        }, 1000);
-      });
-
     }})
   })
 }
