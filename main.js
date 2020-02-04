@@ -35,8 +35,9 @@ function check_grammar(typing_event) {
   var text = ""
 
   $.each(paragraph.children(), function(index, line) {
-    line = $(line).find('.kix-wordhtmlgenerator-word-node')
-    text += line[0].innerText
+    line = $(line).find('.kix-wordhtmlgenerator-word-node')[0]
+    text += line.childNodes[0].nodeValue;
+    text += " " // new line char
   })
   console.log('text: ' + text)
   chrome.runtime.sendMessage({purpose: "check grammar", data: text}, function(response) {
