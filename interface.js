@@ -1,7 +1,21 @@
 $(document).ready(function() {
   box_hover()
   mark_hover()
+  ignore()
 })
+
+function ignore() {
+  $(document).on('click', '.ignore_text', function(e) {
+    paragraph = $(this).closest('.kix-paragraphrenderer')
+    text = collect_text(paragraph)
+    chrome.runtime.sendMessage({purpose: "check grammar", data: text}, function(response) {
+      console.log('ignore')
+      // de highlight
+      // hide box
+    });
+
+  })
+}
 
 function box_hover() { // include border
   $(document).on('mouseover', '.box', function(e) {
