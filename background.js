@@ -8,6 +8,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
  };
 
  if(message.purpose === 'ignore') {
-   $.post(local, message.data, function(r){sendResponse(r)})
- }
+   $.post(local + 'ignore', message.data, function(r){sendResponse(r)})
+   return true;
+ };
 });

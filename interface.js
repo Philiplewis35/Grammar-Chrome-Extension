@@ -4,14 +4,17 @@ $(document).ready(function() {
   ignore()
 })
 
+marks = {}
+
 function ignore() {
   $(document).on('click', '.ignore_text', function(e) {
     paragraph = $(this).closest('.kix-paragraphrenderer')
+    marks[suggestion_id].unmark()
+    $(this).closest('.box').remove()
     text = collect_text(paragraph)
-    chrome.runtime.sendMessage({purpose: "check grammar", data: text}, function(response) {
-      console.log('ignore')
-      // de highlight
-      // hide box
+    suggestion_id = $(this).closest('.box').attr('id').slice(4)
+    chrome.runtime.sendMessage({purpose: "ignore", data: {text: text, session_key: session_key}}, function(response) {
+      console.log(response)
     });
 
   })
@@ -61,6 +64,7 @@ function highlight_text(context, sentences) {
   $.each(sentences, function(sentence, response) {
     suggestion_id = response[0]
     suggestion = response[1]
+    marks[suggestion_id] = instance
     console.log(sentence)
     instance.mark(sentence, {className: 'grammar', separateWordSearch: false, ignoreJoiners: true,
     exclude: ['.box'], acrossElements: true, each: function(node) {

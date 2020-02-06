@@ -4,6 +4,8 @@ $( document ).ready(function() {
   }
 });
 
+var session_key = Math.random().toString(36).substring(2, 15)
+
 var last_event;
 const set_event = function(events) {
   window.last_event = events[0]
@@ -34,7 +36,7 @@ function check_grammar(typing_event) {
   var paragraph = $(typing_event.target).parents('.kix-paragraphrenderer').first()
   text = collect_text(paragraph)
   console.log('text: ' + text)
-  chrome.runtime.sendMessage({purpose: "check grammar", data: text}, function(response) {
+  chrome.runtime.sendMessage({purpose: "check grammar", data: {text: text, session_key: session_key}}, function(response) {
     highlight_text(paragraph[0], response)
   });
 }
