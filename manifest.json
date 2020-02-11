@@ -3,11 +3,15 @@
   "version": "1.0",
   "description": "A tool to help writers use active voice",
   "manifest_version": 2,
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
   "background": {
     "scripts": ["background.js", "jquery-3.4.1.js"],
     "persistent": false
   },
   "permissions": [
+    "https://moodle.port.ac.uk/my/",
     "https://docs.google.com/document/*"
   ],
   "content_scripts": [{
@@ -15,4 +19,8 @@
     "run_at": "document_start",
     "js": ["jquery-3.4.1.js", "arrive.min.js", "main.js", "interface.js", "mark.min.js", "js/bootstrap.js"],
     "css": ["style.css", "css/bootstrap.css"]
-   }]}
+   }],
+   "externally_connectable": {
+    "matches": ["https://grammar-checker1.herokuapp.com/*"]
+  }
+}
