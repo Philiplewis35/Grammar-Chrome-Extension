@@ -1,103 +1,59 @@
-$(document).ready(function() {
-  box_hover()
-  mark_hover()
-  ignore()
+
+$(document).on('mouseover', '.grammar', function() {$(this).find('.box').css('display', 'block')})
+$(document).on('mouseover', '.box', function(event) {event.stopPropagation()})
+$(document).on('click', '.close_box', function() {$(this).closest('.box').css('display', 'none')})
+
+
+$(document).on('click', '.ignore_text', function(e) {
+  $(this).closest('.grammar').css('border-bottom', 'none')
+  box = $(this).closest('.box')
+  box.remove()
 })
 
-marks = {}
-
-function ignore() {
-  $(document).on('click', '.ignore_text', function(e) {
-    paragraph = $(this).closest('.kix-paragraphrenderer')
-    marks[suggestion_id].unmark()
-    $(this).closest('.box').remove()
-    text = collect_text(paragraph)
-    suggestion_id = $(this).closest('.box').attr('id').slice(4)
-    chrome.runtime.sendMessage({purpose: "ignore", data: {text: text, session_key: session_key}}, function(response) {
-      console.log(response)
-    });
-
-  })
-}
-
-function box_hover() { // include border
-  $(document).on('mouseover', '.box', function(e) {
-    var box = $(this).closest('.box')[0]
-    if(e.target == box) { // if hovering over marked text
-      $(box).addClass('hover')
-    }
-  })
-
-  $(document).on('mouseout', '.box', function(e) {
-    var e = event.toElement || event.relatedTarget;
-    if (e.parentNode == this || e == this) {
-       return;
-    }
-    $(this).removeClass('hover')
-    $(this).css('opacity', 0)
-  })
-}
-
-function mark_hover() { // opacity 0 = hidden
-  $(document).on('mouseover', '.grammar', function(e) {
-    var mark = $(this)[0]
-    if(e.target == mark) { // if hovering over marked text
-      $(mark).find('.box').css('opacity', 1)
-    }
-  })
-
-  $(document).on('mouseout', '.grammar', function(e) {
-    var mark = $(this)[0]
-    if(e.target == mark) { // if hovering over marked text
-      setTimeout(function() { // Hide box after one second
-        var box = $(mark).find('.box')[0]
-        if (!($(box).hasClass('hover'))) {
-          $(box).css('opacity', 0)
-        }
-      }, 1000)
-    }
-  })
-}
 
 function highlight_text(context, responses) {
-  var instance = new Mark(context);
-
   if(responses.length > 0) {
-    $.each(responses, function(response_index, response) {
-      instance.mark(response.phrase, {className: 'grammar', separateWordSearch: false, ignoreJoiners: true,
-      exclude: ['.box'], acrossElements: true, each: function(node) {
+    $.each(responses, function(services_index, services) {
+      $.each(services, function(response_index, response) {
+        var instance = new Mark(context);
 
-        if(node.childNodes[0].nodeValue.replace(/[^\x00-\x7F]/g, "").length > 0) {
-          $(node).append("<div class='box' id=box_" + response.id + ">" + response.explanation + "<div class='options_border'></div></div>");
-          suggestion_box = $(node).find('.box')[0]
-          page = $('.kix-page-column')[0]
+        instance.mark(response.phrase, {className: 'grammar', separateWordSearch: false, ignoreJoiners: true,
+        exclude: ['.box'], acrossElements: true, each: function(node) {
 
-          mark_width = node.getBoundingClientRect().width
-          mark_center = node.getBoundingClientRect().x + (mark_width / 2)
-          mark_right = node.getBoundingClientRect().x + mark_width
+          if(node.childNodes[0].nodeValue.replace(/[^\x00-\x7F]/g, "").length > 0) {
+            $(node).append("<div class='box'>" + response.explanation + "<div class='options_border'></div><div class= 'ignore_text btn btn-primary btn-sm'>Ignore</div><div class='close_box btn btn-danger btn-sm'>Close</div></div>");
+            suggestion_box = $(node).find('.box')[0]
 
-          box_left = suggestion_box.getBoundingClientRect().x
-          box_width = suggestion_box.getBoundingClientRect().width
-          box_center = suggestion_box.getBoundingClientRect().x + (box_width / 2)
-          box_right = suggestion_box.getBoundingClientRect().x + box_width
+            mark_width = node.getBoundingClientRect().width
+            mark_center = node.getBoundingClientRect().x + (mark_width / 2)
+            mark_right = node.getBoundingClientRect().x + mark_width
 
-          page_right = page.getBoundingClientRect().x + page.getBoundingClientRect().width
-
-          if(mark_right > box_right) {
-            // align box center with center of phrase
-            box_padding = (mark_center - box_center)
-            suggestion_box.style.marginLeft = box_padding + 'px';
+            box_left = suggestion_box.getBoundingClientRect().x
+            box_width = suggestion_box.getBoundingClientRect().width
+            box_center = suggestion_box.getBoundingClientRect().x + (box_width / 2)
             box_right = suggestion_box.getBoundingClientRect().x + box_width
-          }
 
-          if(box_right > (page_right - 20)) { // if box has gone off right edge
-            box_padding = ((page_right - box_left) - (box_width + 20))
-            suggestion_box.style.marginLeft = box_padding + 'px';
+            page = $('.kix-page-column')[0]
+            page_right = page.getBoundingClientRect().x + page.getBoundingClientRect().width
+
+            if(mark_right > box_right) {
+              // align box center with center of phrase
+              box_padding = (mark_center - box_center)
+              suggestion_box.style.marginLeft = box_padding + 'px';
+              box_right = suggestion_box.getBoundingClientRect().x + box_width
+            }
+
+            if(box_right > (page_right - 20)) { // if box has gone off right edge
+              box_padding = ((page_right - box_left) - (box_width + 20))
+              suggestion_box.style.marginLeft = box_padding + 'px';
+            }
+
+            $(suggestion_box).css('display', 'none')
+            $(suggestion_box).css('opacity', '1')
+
           }
-        }
-      }})
+        }})
+      })
     })
-  } else {
-    console.log('no passive')
   }
 }
