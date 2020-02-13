@@ -12,7 +12,8 @@
   },
   "permissions": [
     "https://moodle.port.ac.uk/my/",
-    "https://docs.google.com/document/*"
+    "https://docs.google.com/document/*",
+    "storage"
   ],
   "content_scripts": [{
     "matches": ["<all_urls>"],

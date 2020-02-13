@@ -48,5 +48,6 @@ function collect_text(paragraph) {
     text += line.childNodes[0].nodeValue;
     text += " " // new line char
   })
+  text = text.replace(/[\u200B-\u200D\uFEFF]/g, '')
   return text
 }
