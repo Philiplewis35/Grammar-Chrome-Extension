@@ -27,3 +27,23 @@ mark {
 .close_box {
   float: right;
 }
+
+.popup {
+  width: 20em;
+}
+
+.submit_log_in {
+  margin-top: 2em;
+}
+
+.log_out {
+  margin-top: 2em;
+}
+
+.error {
+  color: red;
+}
+
+.success {
+  color: green;
+}
