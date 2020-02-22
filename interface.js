@@ -1,4 +1,3 @@
-
 $(document).on('mouseover', '.grammar', function() {$(this).find('.box').css('display', 'block')})
 $(document).on('mouseover', '.box', function(event) {event.stopPropagation()})
 $(document).on('click', '.close_box', function() {$(this).closest('.box').css('display', 'none')})
@@ -48,6 +47,7 @@ function highlight_text(context, responses) {
               suggestion_box.style.marginLeft = box_padding + 'px';
             }
 
+            // change from opacity 0 to display none now box has been generated
             $(suggestion_box).css('display', 'none')
             $(suggestion_box).css('opacity', '1')
 
