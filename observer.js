@@ -16,14 +16,15 @@ function observe_google_doc() {
   input.contentDocument.addEventListener("keydown", clearTimeout(typingTimer), false);
   input.contentDocument.addEventListener("keyup", function(e) {
     clearTimeout(typingTimer);
-    typingTimer = setTimeout(function doneTyping() { check_grammar(window.last_event) }, 3000);
+    typingTimer = setTimeout(function doneTyping() { send_text_to_services(window.last_event) }, 3000);
   }, false);
 };
 
-function check_grammar(typing_event) {
+function send_text_to_services(typing_event) {
   var paragraph = $(typing_event.target).parents('.kix-paragraphrenderer').first()
   text = collect_text(paragraph)
   chrome.runtime.sendMessage({purpose: "check grammar", data: {text: text}}, function(response) {
+    console.log('sending text')
     highlight_text(paragraph[0], response)
   });
 }
