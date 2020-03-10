@@ -26,7 +26,7 @@ function render_log_in_page() {
 }
 
 function render_signed_in_page() {
-  $('body').html('<a href="https://grammar-checker1.herokuapp.com/">Go to grammar checker</a></br><input type="submit" name="commit" value="Log out" class="log_out">')
+  $('body').html('<a href="https://grammar-checker1.herokuapp.com/" target="_blank">Go to grammar checker</a><input type="submit" name="commit" value="Log out" class="log_out">')
 }
 
 function get_services() {
@@ -39,7 +39,9 @@ function get_services() {
         xhr.setRequestHeader('X-User-Token', headers['gc_auth']);
       },
       success: function(response) {
-        chrome.storage.sync.set({gc_services: response}, true);
+        chrome.storage.sync.set({gc_services: response}, function(){
+          true
+        });
       }
     })
   })
