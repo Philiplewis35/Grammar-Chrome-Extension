@@ -1,7 +1,8 @@
 $(document).on('mouseover', '.grammar', function() {$(this).find('.box').css('display', 'block')})
 $(document).on('mouseover', '.box', function(event) {event.stopPropagation()})
 $(document).on('click', '.close_box', function() {$(this).closest('.box').css('display', 'none')})
-
+$(document).on('mouseover', '.suggestion', function() { $(this).addClass('btn-primary'); })
+$(document).on('mouseout', '.suggestion', function() { $(this).removeClass('btn-primary'); })
 
 $(document).on('click', '.ignore_text', function(e) {
   $(this).closest('.grammar').css('border-bottom', 'none')
@@ -9,18 +10,25 @@ $(document).on('click', '.ignore_text', function(e) {
   box.remove()
 })
 
+$(document).on('click', '.suggestion', function(e) {
+  // underlined = $(this).closest('.grammar')[0]
+  // underlined.childNodes[0].nodeValue = $(this)[0].textContent
+  // underlined.remove()
+  // $(this).closest('.grammar').css('border-bottom', 'none')
+  // box = $(this).closest('.box')
+  // box.remove()
+})
+
 
 function highlight_text(context, responses) {
   if(responses.length > 0) {
     $.each(responses, function(services_index, services) {
       $.each(services, function(response_index, response) {
-        var instance = new Mark(context);
-
-        instance.mark(response.phrase, {className: 'grammar', separateWordSearch: false, ignoreJoiners: true,
-        exclude: ['.box'], acrossElements: true, each: function(node) {
-
-          if(node.childNodes[0].nodeValue.replace(/[^\x00-\x7F]/g, "").length > 0) {
-            $(node).append("<div class='box'>" + response.explanation + "<div class='options_border'></div><div class= 'ignore_text btn btn-primary btn-sm'>Ignore</div><div class='close_box btn btn-danger btn-sm'>Close</div></div>");
+        $.each($(context).find('.kix-wordhtmlgenerator-word-node'), function(index, line) {
+          if(line.childNodes[0].nodeValue.replace(/[^\x00-\x7F]/g, "").search(response.phrase) >= 0) {
+            $(line).html($(line).html().replace(/[^\x00-\x7F]/g, "").replace(response.phrase, '<span class=grammar>' + response.phrase + '</span'))
+            node = $(line).find('.grammar')[0]
+            $(node).append("<div class='box'>" + '<div class="card"><div class="card-header">' + response.explanation + '</div><ul class="list-group list-group-flush"><li class="list-group-item suggestion">' + response.suggested_replacement + '<i class="far fa-copy"></i></li><li class="list-group-item"><div class= "ignore_text btn btn-primary btn-sm">Ignore</div><div class="close_box btn btn-danger btn-sm">Close</div></li></ul></div></div>');
             suggestion_box = $(node).find('.box')[0]
 
             mark_width = node.getBoundingClientRect().width
@@ -50,9 +58,8 @@ function highlight_text(context, responses) {
             // change from opacity 0 to display none now box has been generated
             $(suggestion_box).css('display', 'none')
             $(suggestion_box).css('opacity', '1')
-
           }
-        }})
+        });
       })
     })
   }
