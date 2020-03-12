@@ -1,0 +1,60 @@
+.kix-lineview-content {
+  position: static !important;
+}
+
+.gc_box {
+  position: absolute;
+  /* display: none; */
+  opacity: 0;
+  background-color: white;
+  margin-top: 0.75em;
+  z-index: 20;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.gc_gc_box_border {
+  border-top: 0.5px solid grey;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  /* margin-top: 3em;
+  margin-bottom: 0.5em; */
+}
+
+.gc_gc_options_border {
+  border-top: 0.5px solid grey;
+  margin-top: 3em;
+  margin-bottom: 0.5em;
+}
+
+
+.close_gc_box {
+  float: right;
+}
+
+.gc_ext_win_popup {
+  width: 20em;
+}
+
+.gc_submit_log_in {
+  margin-top: 2em;
+}
+
+.gc_log_out {
+  margin-top: 2em;
+}
+
+.gc_error_text {
+  color: red;
+}
+
+.gc_success_text {
+  color: green;
+}
+
+.btn-primary {
+  cursor: pointer;
+}
+
+.grammar {
+  border-bottom: 1px solid blue;
+}
