@@ -17,10 +17,10 @@
     "storage"
   ],
   "content_scripts": [{
-    "matches": ["<all_urls>"],
+    "matches": ["https://docs.google.com/document/*"],
     "run_at": "document_start",
     "js": ["jquery-3.4.1.js", "arrive.min.js", "observer.js", "interface.js", "mark.min.js", "js/bootstrap.js"],
-    "css": ["style.css", "css/bootstrap.css"]
+    "css": ["gc_style.css", "css/bootstrap.css"]
    }],
    "externally_connectable": {
     "matches": ["https://grammar-checker1.herokuapp.com/*"]
