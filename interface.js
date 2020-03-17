@@ -1,22 +1,9 @@
 $(document).on('mouseover', '.grammar', function() {$(this).find('.gc_box').css('display', 'block')})
 $(document).on('mouseover', '.gc_box', function(event) {event.stopPropagation()})
 $(document).on('click', '.close_gc_box', function() {$(this).closest('.gc_box').css('display', 'none')})
-$(document).on('mouseover', '.suggestion', function() { $(this).addClass('btn-primary'); })
-$(document).on('mouseout', '.suggestion', function() { $(this).removeClass('btn-primary'); })
 
 $(document).on('click', '.ignore_text', function(e) {
   $(this).closest('.grammar').css('border-bottom', 'none')
-  gc_box = $(this).closest('.gc_box')
-  gc_box.remove()
-})
-
-$(document).on('click', '.suggestion', function(e) {
-  text = document.createElement('textarea')
-  text.value = $(this)[0].textContent
-  document.body.appendChild(text)
-  text.select();
-  document.execCommand('copy')
-  document.body.removeChild(text)
   gc_box = $(this).closest('.gc_box')
   gc_box.remove()
 })
@@ -29,7 +16,7 @@ function highlight_text(context, responses) {
           if(line.childNodes[0].nodeValue.replace(/[^\x00-\x7F]/g, "").search(response.phrase) >= 0) {
             $(line).html($(line).html().replace(/[^\x00-\x7F]/g, "").replace(response.phrase, '<span class=grammar>' + response.phrase + '</span'))
             node = $(line).find('.grammar')[0]
-            $(node).append("<div class='gc_box'>" + '<div class="card"><div class="card-header">' + response.explanation + '</div><ul class="list-group list-group-flush"><li class="list-group-item suggestion" title="copy suggestion">' + response.suggested_replacement + '<i class="far fa-copy"></i></li><li class="list-group-item"><div class= "ignore_text btn btn-primary btn-sm">Ignore</div><div class="close_gc_box btn btn-danger btn-sm">Close</div></li></ul></div></div>');
+            $(node).append("<div class='gc_box'>" + '<div class="card"><div class="card-header">' + response.explanation + '</div><ul class="list-group list-group-flush"><li class="list-group-item suggestion">' + response.suggested_replacement + '</li><li class="list-group-item"><div class= "ignore_text btn btn-primary btn-sm">Ignore</div><div class="close_gc_box btn btn-danger btn-sm">Close</div></li></ul></div></div>');
             suggestion_gc_box = $(node).find('.gc_box')[0]
 
             mark_width = node.getBoundingClientRect().width
