@@ -51,3 +51,19 @@
 .grammar {
   border-bottom: 1px solid blue;
 }
+
+mark {
+  background-color: white !important;
+}
+
+.btn-primary {
+  cursor: pointer;
+}
+
+.gc_alert_box {
+  margin: 1em 1em 1em 1em;
+  padding: 0.5em 1em 0.5em 1em;
+  width: 95%;
+  color: green;
+  background-color: rgb(212, 237, 218);
+}

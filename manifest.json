@@ -1,7 +1,7 @@
 {
-  "name": "Passive voice grammar checker",
+  "name": "Open source grammar checker",
   "version": "1.0",
-  "description": "A tool to help writers use active voice",
+  "description": "An open source grammar checker you can use in your browser",
   "manifest_version": 2,
   "browser_action": {
     "default_popup": "popup.html"
@@ -17,9 +17,9 @@
     "storage"
   ],
   "content_scripts": [{
-    "matches": ["https://docs.google.com/document/*"],
+    "matches": ["<all_urls>"],
     "run_at": "document_start",
-    "js": ["jquery-3.4.1.js", "arrive.min.js", "observer.js", "interface.js", "mark.min.js", "js/bootstrap.js"],
+    "js": ["jquery-3.4.1.js", "arrive.min.js", "observer.js", "mark.min.js", "interface.js", "js/bootstrap.js"],
     "css": ["gc_style.css", "css/bootstrap.css"]
    }],
    "externally_connectable": {
