@@ -19,19 +19,3 @@ def sign_in(driver, wait)
   success = wait.until { driver.find_element(:class, 'success') }
   puts 'signed in' if success
 end
-
-def open_google_doc(driver, wait)
-  driver.navigate.to('https://docs.google.com/')
-  email = wait.until { driver.find_element(:id, 'identifierId') }
-  email.send_keys('philiplewis35@gmail.com')
-  driver.find_element(class: 'RveJvd').click
-  binding.pry
-end
-
-# sign_in(driver, wait)
-open_google_doc(driver, wait)
-
-
-# go to google docs
-# type a passive sentence
-# look for box

@@ -24,8 +24,7 @@ function send_text_to_services(typing_event) {
   var paragraph = $(typing_event.target).parents('.kix-paragraphrenderer').first()
   text = collect_text(paragraph)
   chrome.runtime.sendMessage({purpose: "check grammar", data: {text: text}}, function(response) {
-    console.log('sending text')
-    highlight_text(paragraph[0], response)
+    highlight_text(response)
   });
 }
 
