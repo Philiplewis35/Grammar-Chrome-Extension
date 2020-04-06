@@ -1,6 +1,7 @@
 $( document ).ready(function() {
   if($(".kix-lineview-content")[0]) {
     observe_google_doc();
+    check_entire_doc();
   }
 });
 
@@ -37,4 +38,14 @@ function collect_text(paragraph) {
   })
   text = text.replace(/[\u200B-\u200D\uFEFF]/g, '')
   return text
+}
+
+function check_entire_doc() {
+  text = ""
+  $.each($('.kix-paragraphrenderer'), function(index, paragraph) {
+    text += collect_text($(paragraph))
+  })
+  chrome.runtime.sendMessage({purpose: "check grammar", data: {text: text}}, function(response) {
+    highlight_text(response)
+  });
 }
