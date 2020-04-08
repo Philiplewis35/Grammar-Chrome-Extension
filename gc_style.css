@@ -40,6 +40,10 @@
   margin-top: 2em;
 }
 
+.gc_sync {
+  margin-top: 2em;
+}
+
 .gc_error_text {
   color: red;
 }

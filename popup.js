@@ -98,3 +98,8 @@ $(document).on('click', '.gc_log_out', function(){
     })
   })
 })
+
+$(document).on('click', '.gc_sync', function() {
+  get_services()
+  $('body').prepend('<p class="gc_success_tet">Services Updated</p>')
+})
