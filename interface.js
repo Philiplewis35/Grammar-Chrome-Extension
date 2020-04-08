@@ -1,14 +1,27 @@
 window.instance = new Mark('.kix-paragraphrenderer')
 
-$(document).on('mouseover', '.grammar', function() {
-  $.each($('.gc_box'), function(index, suggestion_box) {
-    $(this).css('display', 'none')
+function grammar_hover(grammar) {
+  var timeoutId = null
+
+  grammar.addEventListener('mouseover', function() {
+    grammar_box = $(this)
+    timeoutID = window.setTimeout(function () {
+      $.each($('.gc_box'), function(index, suggestion_box) {
+        $(this).css('display', 'none')
+      })
+      grammar_box.find('.gc_box').css('display', 'block')
+    }, 1000);
+  });
+
+  grammar.addEventListener('mouseout', function() {
+    window.clearTimeout(timeoutID)
   })
-  $(this).find('.gc_box').css('display', 'block')
-})
+}
+
 
 $(document).on('mouseover', '.gc_box', function(event) {event.stopPropagation()})
 $(document).on('click', '.close_gc_box', function() {$(this).closest('.gc_box').css('display', 'none')})
+
 $(document).on('mouseover', '.copy_suggestion', function() { $(this).addClass('btn-primary') })
 $(document).on('mouseout', '.copy_suggestion', function() { $(this).removeClass('btn-primary') })
 
@@ -82,6 +95,7 @@ function highlight_text(responses) {
           // change from opacity 0 to display none now gc_box has been generated
           $(suggestion_gc_box).css('display', 'none')
           $(suggestion_gc_box).css('opacity', '1')
+          grammar_hover(node)
         }})
       })
     })
