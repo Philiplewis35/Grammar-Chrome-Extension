@@ -25,7 +25,7 @@ function send_text_to_services(typing_event) {
   var paragraph = $(typing_event.target).parents('.kix-paragraphrenderer').first()
   text = collect_text(paragraph)
   chrome.runtime.sendMessage({purpose: "check grammar", data: {text: text}}, function(response) {
-    highlight_text(response)
+    handle_response(response)
   });
 }
 
@@ -46,6 +46,16 @@ function check_entire_doc() {
     text += collect_text($(paragraph))
   })
   chrome.runtime.sendMessage({purpose: "check grammar", data: {text: text}}, function(response) {
-    highlight_text(response)
+    handle_response(response)
   });
+}
+
+function handle_response(response) {
+  if(response == 'signed out') {
+    $('body').prepend("<div class = 'gc_notice'>Please sign in to the GSR from the chrome extension's popup</div>")
+  } else if(response == 'empty') {
+    $('body').prepend("<div class = 'gc_notice'>Please add services using the Grammar Services Repository</div>")
+  } else {
+    highlight_text(response)
+  }
 }

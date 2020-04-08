@@ -67,3 +67,11 @@ mark {
   color: green;
   background-color: rgb(212, 237, 218);
 }
+
+.gc_notice {
+  margin: 1em 1em 1em 1em;
+  padding: 0.5em 1em 0.5em 1em;
+  width: 95%;
+  color: #004085;
+  background-color: #cce5ff;
+}
