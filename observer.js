@@ -2,6 +2,7 @@ $( document ).ready(function() {
   if($(".kix-lineview-content")[0]) {
     observe_google_doc();
     check_entire_doc();
+    alert_listener();
   }
 });
 
@@ -25,7 +26,7 @@ function send_text_to_services(typing_event) {
   var paragraph = $(typing_event.target).parents('.kix-paragraphrenderer').first()
   text = collect_text(paragraph)
   chrome.runtime.sendMessage({purpose: "check grammar", data: {text: text}}, function(response) {
-    handle_response(response)
+    highlight_text(response)
   });
 }
 
@@ -46,16 +47,38 @@ function check_entire_doc() {
     text += collect_text($(paragraph))
   })
   chrome.runtime.sendMessage({purpose: "check grammar", data: {text: text}}, function(response) {
-    handle_response(response)
+    highlight_text(response)
   });
 }
 
-function handle_response(response) {
-  if(response == 'signed out') {
-    $('body').prepend("<div class = 'gc_notice'>Please sign in to the GSR from the chrome extension's popup</div>")
-  } else if(response == 'empty') {
-    $('body').prepend("<div class = 'gc_notice'>Please add services using the Grammar Services Repository</div>")
-  } else {
-    highlight_text(response)
+function show_services_alert() {
+  if($('.gc_notice.services').length == 0) {
+    $('body').prepend("<div class = 'gc_notice services'>Please add services using the <a href='https://grammar-checker1.herokuapp.com/' target='_blank'>Grammar Services Repository</a>. Please press 'sync services' in the extension popup after you have followed this step.</div>")
   }
+}
+
+function show_login_alert() {
+  if( $('.gc_notice.signed_out').length == 0) {
+    $('body').prepend("<div class = 'gc_notice signed_out'>Please sign in to the GSR from the chrome extension's popup</div>")
+  }
+}
+
+function alert_listener() {
+  chrome.runtime.onMessage.addListener(
+   function(request) {
+     switch(request.action){
+       case 'signed_in':
+          $('.gc_notice.signed_out').remove();
+          break;
+       case 'signed_out':
+          show_login_alert();
+          break;
+       case 'no_services':
+          show_services_alert();
+          break;
+       case 'populated_services':
+          $('.gc_notice.services').remove();
+          break;
+     }
+  });
 }

@@ -11,9 +11,7 @@
     "persistent": false
   },
   "permissions": [
-    "https://moodle.port.ac.uk/my/",
     "https://docs.google.com/document/*",
-    "http://localhost/*",
     "storage"
   ],
   "content_scripts": [{

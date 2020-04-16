@@ -41,7 +41,7 @@
 }
 
 .gc_sync {
-  margin-top: 2em;
+  margin-top: 1em;
 }
 
 .gc_error_text {
@@ -78,4 +78,20 @@ mark {
   width: 95%;
   color: #004085;
   background-color: #cce5ff;
+}
+
+#user_email, #user_password {
+  margin-top: 0.5em;
+}
+
+.field.password {
+  margin-top: 1em;
+}
+
+a:visited{
+color: blue !important;
+}
+
+.bold {
+  font-weight: bold;
 }
