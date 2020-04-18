@@ -18,20 +18,15 @@ function grammar_hover(grammar) {
   })
 }
 
-
 $(document).on('mouseover', '.gc_box', function(event) {event.stopPropagation()})
-$(document).on('click', '.close_gc_box', function() {$(this).closest('.gc_box').css('display', 'none')})
+
+$(document).on('click', '.close_gc_box', function(e) {
+  $(this).closest('.gc_box').css('display', 'none')
+  e.stopPropagation()
+})
 
 $(document).on('mouseover', '.copy_suggestion', function() { $(this).addClass('btn-primary') })
 $(document).on('mouseout', '.copy_suggestion', function() { $(this).removeClass('btn-primary') })
-
-$(document).on('click', '.ignore_text', function(e) {
-  paragraph = $(this).closest('.kix-paragraphrenderer')
-  mark = $(this).closest('mark')[0]
-  id = mark.classList[mark.classList.length - 1]
-  $('.' + id + ' > .gc_box').remove();
-  window.instance.unmark({className: id})
-})
 
 $(document).on('click', '.copy_suggestion', function() {
   str = this.innerText
@@ -44,8 +39,21 @@ $(document).on('click', '.copy_suggestion', function() {
   $(this).closest('.gc_box').css('display', 'none')
   $('body').prepend('<div class = "gc_alert_box">suggestion coppied to clipboard</div>')
   setTimeout(function(){ $('.gc_alert_box').remove() }, 3000);
+  e.stopPropagation()
 })
 
+$(document).on('click', '.ignore_text', function(e) {
+  paragraph = $(this).closest('.kix-paragraphrenderer')
+  mark = $(this).closest('mark')[0]
+  id = mark.classList[mark.classList.length - 1]
+  $('.' + id + ' > .gc_box').remove();
+  window.instance.unmark({className: id})
+  e.stopPropagation()
+})
+
+$(document).on('click', '.kix-page-column', function() {
+  $('.gc_box').css('display', 'none')
+})
 
 function highlight_text(responses) {
   if(responses.length > 0) {
