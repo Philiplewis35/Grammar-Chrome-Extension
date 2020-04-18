@@ -46,7 +46,9 @@ function check_entire_doc() {
   $.each($('.kix-paragraphrenderer'), function(index, paragraph) {
     text += collect_text($(paragraph))
   })
+  console.log('text: ' + text)
   chrome.runtime.sendMessage({purpose: "check grammar", data: {text: text}}, function(response) {
+    console.log('response: ' + response)
     highlight_text(response)
   });
 }
@@ -78,6 +80,9 @@ function alert_listener() {
           break;
        case 'populated_services':
           $('.gc_notice.services').remove();
+          break;
+       case 'check_entire_doc':
+          check_entire_doc();
           break;
      }
   });

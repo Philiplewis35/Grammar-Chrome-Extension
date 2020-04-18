@@ -35,7 +35,7 @@ function render_signed_in_page() {
   });
 }
 
-function get_services() {
+function get_services(manual) {
   chrome.storage.local.get(['gc_email', 'gc_auth'], function(headers) {
     $.ajax({
       url: window.root_url + "api/v1/services/",
@@ -48,7 +48,7 @@ function get_services() {
         if(response.length == 0) { update_alert('no_services') } else { update_alert('populated_services') }
         $('body').prepend('<p class="gc_success_tet">Services Updated</p>')
         chrome.storage.local.set({gc_services: response}, function(){
-          true
+          if(manual == true) { update_alert('check_entire_doc') }
         });
       }
     })
@@ -80,7 +80,7 @@ $(document).on('click', '.gc_submit_log_in', function(){
       chrome.storage.local.set({gc_auth: response['authentication_token']}, function(){});
       render_signed_in_page()
       update_alert('signed_in')
-      get_services() // syncs services to chrome storage
+      get_services(false) // syncs services to chrome storage
     },
     error: function() { // show error message on log in page
       if($('.gc_error_text')[0]) {
@@ -119,5 +119,5 @@ $(document).on('click', '.gc_log_out', function(){
 
 // sync services
 $(document).on('click', '.gc_sync', function() {
-  get_services()
+  get_services(true)
 })
